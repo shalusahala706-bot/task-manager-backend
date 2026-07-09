@@ -1,8 +1,10 @@
-const newUser = [];
+import user from "../models/userModel.js";
 
-export const signup = (req, res) => {
+// const newUser = [];
+
+export const signup = async (req, res) => {
   try {
-    newUser.push(req.body);
+    const newUser = await user.create(req.body);
     console.log(newUser);
     res.status(200).json({ success: true, message: "signup successful" });
   } catch (error) {
@@ -14,13 +16,19 @@ export const signup = (req, res) => {
   }
 };
 
-export const handleLogin = (req, res) => {
+export const handleLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = newUser.find(
-      (user) => user.email === email
-    );
+    // if(!email){
+    //   return res.status(400).json({
+    //     success:false,
+    //     message:"email is required"
+
+    //   })
+    // }
+
+    const user = await user.findOne({ email });
 
     // console.log(user);
 
@@ -37,10 +45,10 @@ export const handleLogin = (req, res) => {
       });
     }
 
-    res.status(200).json({ success: true,
-       message: "login successful" });
-  }
-   catch (error) {
+    return res.status(200).json({ success: true, message: "login successful" });
+  } catch (error) {
+
+    
     res.status(500).json({
       success: false,
       message: "internal server error",
