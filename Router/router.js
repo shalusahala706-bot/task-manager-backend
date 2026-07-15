@@ -1,13 +1,16 @@
 import express from 'express';
-import { handleLogin, signup } from '../controller/authController.js';
+import { handleLogin, profile, signup } from '../controller/authController.js';
 import {
   createTodo,deleteTodo,getAllTodos,updateTodo} from '../controller/todoController.js';
 import checkAuth from '../middleware/checkAuth.js';
+import { logout } from '../controller/authController.js';
 
 const router = express.Router();
 
 router.post('/signup', signup);
 router.post('/login', handleLogin);
+router.put('/profile/:id', checkAuth, profile);
+router.post('/logout', logout);
 
 
 router.post('/todos', checkAuth, createTodo);
