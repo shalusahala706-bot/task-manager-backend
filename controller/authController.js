@@ -78,7 +78,9 @@ export const profile = async (req, res) => {
   const user = await User.findByIdAndUpdate(req.params.id,
      {
     bio: req.body.bio,
-    phone: req.body.phone}
+    phone: req.body.phone,
+    profilePhoto: req.file ? req.file.path : undefined,
+  }
   );
   res.status(200).json({
     success: true,

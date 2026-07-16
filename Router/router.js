@@ -4,12 +4,13 @@ import {
   createTodo,deleteTodo,getAllTodos,updateTodo} from '../controller/todoController.js';
 import checkAuth from '../middleware/checkAuth.js';
 import { logout } from '../controller/authController.js';
+import upload from '../middleware/imageUpload.js';
 
 const router = express.Router();
 
-router.post('/signup', signup);
+router.post('/signup',upload.single('profilePhoto'),signup);
 router.post('/login', handleLogin);
-router.put('/profile/:id', checkAuth, profile);
+router.put('/profile/:id',upload.single('profilePhoto') ,checkAuth, profile);
 router.post('/logout', logout);
 
 
