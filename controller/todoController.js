@@ -2,7 +2,7 @@ import Todo from '../models/todoModel.js';
 
 export const createTodo = async (req, res) => {
   try {
-    const { title, description } = req.body;
+    const { task,category,dueDate,completed } = req.body;
 
     if (!title) {
       return res.status(400).json({
@@ -11,7 +11,7 @@ export const createTodo = async (req, res) => {
       });
     }
 
-    const todo = await Todo.create({ title, description });
+    const todo = await Todo.create({ task,category,dueDate,completed });
 
     return res.status(201).json({
       success: true,
@@ -47,11 +47,11 @@ export const getAllTodos = async (req, res) => {
 
 export const updateTodo = async (req, res) => {
   try {
-    const { title, description } = req.body;
+    const { task,category,dueDate,completed } = req.body;
 
     const todo = await Todo.findByIdAndUpdate(
       req.params.id,
-      { title, description }
+      { task,category,dueDate,completed }
     );
 
     if (!todo) {
